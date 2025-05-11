@@ -1,133 +1,137 @@
 
 
-```html
+html
  <!DOCTYPE html>
  <html lang="pt-BR">
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StreamPlus IPTV</title>
+  <title>GBJ TV - Sua Próxima Maratona Começa Aqui!</title>
   <style>
-  /* Estilos Gerais */
+  / Estilos CSS Intermediários /
   body {
-  font-family: 'Serif Moderno', sans-serif;
-  background-color: #121212; /* Fundo escuro (modo noturno) */
-  color: #fff; /* Cor do texto */
+  font-family: sans-serif;
   margin: 0;
-  padding: 0;
+  background-color: f4f4f4;
+  color: 333;
   }
 
-  /* Cabeçalho */
   header {
+  background-color: 008080; / Azul-petróleo /
+  color: fff;
+  padding: 20px;
   text-align: center;
-  padding: 20px;
-  color: #FFD700; /* Ouro */
   }
 
-  /* Layout Principal */
-  .container {
+  header img {
+  max-width: 200px; / Ajuste conforme necessário /
+  height: auto;
+  margin-bottom: 10px;
+  }
+
+  .hero {
+  background-image: url('pessoas-assistindo-futebol.jpg'); / Substitua pelo caminho da imagem /
+  background-size: cover;
+  background-position: center;
+  color: fff;
+  text-align: center;
+  padding: 100px 20px;
+  }
+
+  .hero h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  }
+
+  .plans {
   display: flex;
-  height: 100vh;
-  }
-
-  /* Barra Lateral (Lista de Canais) */
-  .sidebar {
-  width: 250px;
-  background-color: #212121;
+  justify-content: space-around;
   padding: 20px;
   }
 
-  .channel-list {
-  list-style: none;
-  padding: 0;
+  .plan {
+  background-color: fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 30%;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 
-  .channel-list li {
-  padding: 10px;
-  border-bottom: 1px solid #333;
+  .plan h2 {
+  color: ff8c00; / Laranja /
+  }
+
+  .plan button {
+  background-color: ff8c00; / Laranja /
+  color: fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
   }
 
-  .channel-list li img {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
+  .free-trial {
+  text-align: center;
+  padding: 30px;
+  background-color: e9ecef;
   }
 
-  .channel-list li:hover {
-  background-color: #333;
-  }
-
-  /* Área de Vídeo */
-  .video-area {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  }
-
-  #video-player {
-  width: 80%;
-  max-width: 800px;
-  background-color: #000;
-  }
-
-  /* Responsividade */
+  / Estilos Responsivos /
   @media (max-width: 768px) {
-  .container {
+  .plans {
   flex-direction: column;
+  align-items: center;
   }
-  .sidebar {
-  width: 100%;
-  }
-  #video-player {
-  width: 100%;
+
+  .plan {
+  width: 80%;
+  margin-bottom: 20px;
   }
   }
   </style>
  </head>
  <body>
+
   <header>
-  <h1>StreamPlus IPTV</h1>
+  <img src="logo-gbj-tv.png" alt="Logotipo GBJ TV">  <!-- Substitua pelo caminho da sua logo -->
+  <img src="canais-assinatura.jpg" alt="Canais de Assinatura"> <!-- Substitua pelo caminho da imagem -->
   </header>
 
-  <div class="container">
-  <aside class="sidebar">
-  <h2>Canais</h2>
-  <ul class="channel-list">
-  <li><img src="canal1-logo.png" alt="Canal 1">Canal 1</li>
-  <li><img src="canal2-logo.png" alt="Canal 2">Canal 2</li>
-  <li><img src="canal3-logo.png" alt="Canal 3">Canal 3</li>
-  <!-- Adicione mais canais aqui -->
-  </ul>
-  </aside>
+  <section class="hero">
+  <h1>Assista aos Melhores Filmes, Séries e Esportes!</h1>
+  <p>Experimente GBJ TV e descubra um mundo de entretenimento.</p>
+  </section>
 
-  <main class="video-area">
-  <video id="video-player" controls>
-  <source src="seu-stream.m3u8" type="application/x-mpegURL">
-  Seu navegador não suporta vídeo HTML5.
-  </video>
-  </main>
+  <section class="plans">
+  <div class="plan">
+  <h2>Plano Mensal</h2>
+  <p>Acesso ilimitado por um mês.</p>
+  <p>R$XX,XX/mês</p>
+  <button>Assinar Agora</button>
   </div>
 
-  <script>
-  // Adicione aqui a lógica JavaScript para carregar e reproduzir streams M3U8
-  // Exemplo básico:
-  const videoPlayer = document.getElementById('video-player');
-  const channelList = document.querySelector('.channel-list');
+  <div class="plan">
+  <h2>Plano Semestral</h2>
+  <p>Acesso ilimitado por seis meses.</p>
+  <p>R$YYY,YY/semestre (Economize!)</p>
+  <button>Assinar Agora</button>
+  </div>
 
-  channelList.addEventListener('click', function(e) {
-  if (e.target && e.target.nodeName == "LI") {
-  // Simulação de carregamento de stream
-  videoPlayer.src = "novo-stream.m3u8"; // Substitua por streams reais
-  videoPlayer.load();
-  videoPlayer.play();
-  }
-  });
-  </script>
+  <div class="plan">
+  <h2>Plano Anual</h2>
+  <p>Acesso ilimitado por um ano.</p>
+  <p>R$ZZZ,ZZ/ano (Melhor Custo-Benefício!)</p>
+  <button>Assinar Agora</button>
+  </div>
+  </section>
+
+  <section class="free-trial">
+  <h2>Experimente Grátis por 7 Dias!</h2>
+  <p>Desfrute de todo o nosso conteúdo sem compromisso.</p>
+  <button>Começar Teste Grátis</button>
+  </section>
+
  </body>
  </html>
- ```
+ 
