@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>StreamDroid - Assista ao que quiser sem limites</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -17,6 +17,12 @@
       background-color: #0e0e0e; 
       color: #fff;
       line-height: 1.6;
+      transition: background-color 0.3s ease;
+    }
+
+    .light-mode {
+      background-color: #f4f4f4;
+      color: #000;
     }
 
     header {
@@ -28,6 +34,15 @@
       position: sticky;
       top: 0;
       z-index: 1000;
+      transition: background 0.3s ease;
+    }
+
+    .light header {
+      background: #fff;
+    }
+
+    .light nav a {
+      color: #000;
     }
 
     header .logo {
@@ -83,6 +98,11 @@
       flex-wrap: wrap;
       gap: 20px;
       justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .light .features {
+      background: #ddd;
     }
 
     .feature {
@@ -102,12 +122,22 @@
       padding: 60px 40px;
       background: #0e0e0e;
       text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .light .testimonials {
+      background: #eee;
     }
 
     .testimonial {
       max-width: 600px;
       margin: 20px auto;
       font-style: italic;
+      display: none;
+    }
+
+    .testimonial.active {
+      display: block;
     }
 
     .testimonial strong {
@@ -116,10 +146,33 @@
       color: #ff6b6b;
     }
 
+    .trial-form {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .trial-form input {
+      padding: 10px;
+      width: 300px;
+      border: none;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .trial-form button {
+      padding: 10px 20px;
+      background: #25d366;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
     .pricing {
       padding: 60px 40px;
       background: #111;
       text-align: center;
+      transition: background-color 0.3s ease;
     }
 
     .plans {
@@ -187,6 +240,37 @@
       background: #1ebf57;
     }
 
+    .popup {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 10px;
+      color: #fff;
+      max-width: 300px;
+      z-index: 9999;
+    }
+
+    #countdown {
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 20px 0;
+    }
+
+    #theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
     @media (max-width: 768px) {
       .hero h1 {
         font-size: 2rem;
@@ -198,6 +282,9 @@
   </style>
 </head>
 <body>
+
+  <!-- Botão de tema -->
+  <button id="theme-toggle">☀️ Modo Claro</button>
 
   <!-- Header -->
   <header>
@@ -236,10 +323,10 @@
     </div>
   </section>
 
-  <!-- Depoimentos -->
+  <!-- Carrossel de Depoimentos -->
   <section class="testimonials" id="testimonials">
     <h2>O que nossos clientes dizem:</h2>
-    <div class="testimonial">
+    <div class="testimonial active">
       “Finalmente achei um serviço confiável e com tudo o que preciso. Super recomendo!”
       <strong>Maria de Oliveira, São Paulo</strong>
     </div>
@@ -252,6 +339,18 @@
       <strong>Francinete de Almeida</strong>
     </div>
   </section>
+
+  <!-- Formulário de Teste Grátis -->
+  <section class="trial-form">
+    <h3>Comece seu teste gratuito agora:</h3>
+    <form id="free-trial">
+      <input type="email" placeholder="Seu melhor e-mail" required />
+      <button type="submit">Começar Agora</button>
+    </form>
+  </section>
+
+  <!-- Contador Regressivo -->
+  <div id="countdown"></div>
 
   <!-- Planos -->
   <section class="pricing" id="pricing">
@@ -294,7 +393,80 @@
   </footer>
 
   <!-- Botão Fixo WhatsApp -->
-  <a href="https://wa.me/5511999999999"  target="_blank" class="whatsapp-btn">💬 Fale Conosco</a>
+  <a href="https://wa.me/5511999999999?text=Olá%20gostaria%20de%20saber%20mais%20sobre%20o%20teste%20grátis." target="_blank" class="whatsapp-btn">💬 Fale Conosco</a>
 
+  <!-- Script com todas as funcionalidades -->
+  <script>
+    // 1. Carrossel de depoimentos
+    let testimonials = document.querySelectorAll('.testimonial');
+    let currentIndex = 0;
+
+    setInterval(() => {
+      testimonials.forEach(t => t.classList.remove('active'));
+      testimonials[currentIndex].classList.add('active');
+      currentIndex = (currentIndex + 1) % testimonials.length;
+    }, 5000);
+
+    // 2. Formulário de teste grátis
+    document.getElementById('free-trial').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert("Teste grátis liberado! Verifique seu e-mail.");
+    });
+
+    // 3. Popup de saída
+    document.addEventListener('mouseout', function(e) {
+      if (!document.querySelector('.popup') && e.clientY < 10) {
+        const popup = document.createElement('div');
+        popup.className = 'popup';
+        popup.innerHTML = `
+          <h4>Espera! Temos uma oferta especial pra você!</h4>
+          <p>Experimente por 2 horas grátis e veja como é simples.</p>
+          <button onclick="this.parentElement.remove()" style="background:#ff6b6b; border:none; padding:10px 15px; border-radius:5px; color:#fff;">Fechar</button> 
+        `;
+        document.body.appendChild(popup);
+      }
+    });
+
+    // 4. Troca de tema
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      document.querySelector('header').classList.toggle('light');
+    });
+
+    // 5. Contador regressivo
+    const countDownDate = new Date().getTime() + (2 * 60 * 60 * 1000); // 2 horas
+
+    let x = setInterval(() => {
+      let now = new Date().getTime();
+      let distance = countDownDate - now;
+
+      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML =
+        `${hours}h ${minutes}m ${seconds}s para o fim do teste grátis!`;
+
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "Oferta expirada!";
+      }
+    }, 1000);
+
+    // 6. Scroll suave
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // 7. Calculadora de economia
+    const tvPaga = 180;
+    const streamDroid = 29.90;
+    const economia = (tvPaga - streamDroid).toFixed(2);
+    document.getElementById('economia')?.innerText = `R$ ${economia}`;
+  </script>
 </body>
 </html>
